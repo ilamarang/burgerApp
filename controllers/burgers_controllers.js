@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var burger = require('../models/burger')
-
+var yetToDevourCounter = 0;
+var alreadyDevouredCounter = 0;
 
 router.get('/', function (req, res) {
   res.redirect('/index');
@@ -9,11 +10,24 @@ router.get('/', function (req, res) {
 
 router.get('/index', function (req, res) {
   burger.all(function(data) {
-    var hbsObject = {
-      burger: data
-    };
-    console.log(hbsObject);
-    res.render("index", hbsObject);
+
+    
+    res.render("index", {
+      burger: data,
+      helpers: {
+        nonDevouredCounter: function() {
+          yetToDevourCounter++;
+          return yetToDevourCounter;
+
+        },
+        devouredCounter: function() {
+          alreadyDevouredCounter++
+          return alreadyDevouredCounter;
+        }
+      }
+    });
+    yetToDevourCounter = 0;
+    alreadyDevouredCounter = 0;
   });
 });
 
