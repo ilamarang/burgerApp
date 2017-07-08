@@ -17,4 +17,21 @@ router.get('/index', function (req, res) {
   });
 });
 
+router.post('/',function(req,res){
+
+burger.create( ['burger_name','devoured'],
+[req.body.burgerName, false],
+function(){
+  res.redirect('/index');
+})
+})
+router.put('/:id',function(req,res){
+  var condition = "id = " + req.params.id;
+burger.update({devoured:true},condition,function(){
+  res.redirect('/index');
+})
+})
+
+
+
 module.exports = router;

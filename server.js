@@ -9,6 +9,11 @@ var app = express();
 //Setup static content
 app.use(express.static('public'));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Override with POST having ?_method=DELETE
+app.use(methodOverride("_method"));
+
 //Import handlebars
 var exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
